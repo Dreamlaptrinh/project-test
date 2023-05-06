@@ -2,7 +2,7 @@ import './App.css';
 import { Header, CreateContainer, MainContainer } from './components';
 import {Route, Routes} from "react-router-dom"
 import React from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion'; //Tạo hiệu ứng cho các thành phần khi bị xóa khỏi react.
 
 function App() {
   return (

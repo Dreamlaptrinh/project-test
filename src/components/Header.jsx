@@ -1,3 +1,5 @@
+//Header trang web
+
 import React, { useState } from "react";
 // import Logo from "./img/logo.png";
 import Chef1 from "./img/chef1.png";
@@ -20,21 +22,21 @@ function Header (){
     const [{user}, dispatch] = useStateValue()
     const [isMenu,setIsMenu] = useState(false)
 
-    const login = async() =>{
+    const login = async() =>{  //Đăng nhập login
 
-        if(!user){
+        if(!user){   //Đăng nhập sign with popup in firebase
         const {user:{refreshToken, providerData}} = await signInWithPopup(firebaseAuth, provider)
         dispatch({
             type: actionType.SET_USER,
             user: providerData[0]
         })
-        localStorage.setItem('user',JSON.stringify(providerData[0]));
+        localStorage.setItem('user',JSON.stringify(providerData[0])); // Lưu vào store
         }else(
             setIsMenu(!isMenu)
         )
     };
 
-    const logout = ()=>{
+    const logout = ()=>{  //Log out user
         setIsMenu(false)
         localStorage.clear()
         dispatch({
