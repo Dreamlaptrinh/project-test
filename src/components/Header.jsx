@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Logo from "./img/logo.png";
+// import Logo from "./img/logo.png";
+import Chef1 from "./img/chef1.png";
 
 import {MdShoppingBasket, MdAdd, MdLogout} from "react-icons/md";
 import Avatar from "./img/avatar.png"
@@ -49,8 +50,8 @@ function Header (){
             {/* desktop and tablet */}
             <div className="hidden md:flex w-full h-full items-center justify-between">
                 <Link to={"/"} className="flex items-center gap-2">
-                    <img src={Logo} alt="logo" className="w-8 object-cover" />
-                    <p className="text-headingColor text-x1 font-bold">City</p>
+                    <img src={Chef1} alt="Chef1" className="w-8 object-cover" />
+                    <p className="text-headingColor text-x1 font-bold">Bentilzone</p>
                 </Link>
                 <div className="flex items-center gap-8">
 
@@ -122,9 +123,9 @@ function Header (){
                 <div className="absolute -top-2 -right-5  w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">                    <p className="text-xs text-white font-semibold">2</p>
                 </div>
             </div>
-            
+
             <Link to={"/"} className="flex items-center gap-2">
-                    <img src={Logo} alt="logo" className="w-8 object-cover" />
+                    <img src={Chef1} alt="Chef1" className="w-8 object-cover" />
                     <p className="text-headingColor text-x1 font-bold">City</p>
             </Link>     
 
