@@ -5,7 +5,9 @@ import { Categories } from "../utils/data";
 import Loader from "./Loader";
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase.config";
-import { saveItem } from "../utils/firebaseFunctions";
+import { getAllFoodItems, saveItem } from "../utils/firebaseFunctions";
+import { actionType } from "../context/reducer";
+import { useStateValue } from "../context/StateProvider";
 
 
 function CreateContainer() {
@@ -19,6 +21,8 @@ function CreateContainer() {
     const [alertStatus, setAlerStatus] = useState("danger");
     const [msg, setMsg] = useState(null);
     const [isLoading, setIsloading] = useState(false);
+    const[{fooditems},dispatch] = useStateValue();
+
 
     const uploadImage = (e) => { //upload img to firebase
         setIsloading(true);
@@ -70,7 +74,7 @@ function CreateContainer() {
     const saveDetails = () => {
         setIsloading(true);
         try {
-            if (!title || !calories || !imageAsset || !price || !category) {
+            if ((!title || !calories || !imageAsset || !price || !category)) {
                 setFields(true);
                 setMsg("Empty");
                 setAlerStatus("danger");
@@ -107,6 +111,7 @@ function CreateContainer() {
                 setIsloading(false);
             }, 3000)
         }
+        fetchData()
     }
 
     const clearData = ()=>{
@@ -116,7 +121,15 @@ function CreateContainer() {
         setPrice("")
         setCalories("Select Category")
 
-    }
+    };
+    const fetchData = async()=>{
+        await getAllFoodItems().then(data=>{
+          dispatch({
+            type: actionType.SET_FOOD_ITEMS,
+            fooditems: data,
+          })
+        })
+      }
 
 
 
@@ -150,7 +163,7 @@ function CreateContainer() {
                 </div>
                 <div className="w-full">
                     <select
-                        onChange={(e) => setCalories(e.target.value)}
+                        onChange={(e) => setCategory(e.target.value)}
                         className="outline-none w-full text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
                     >
                         <option value="other" className="bg-white">Select Category
@@ -199,8 +212,9 @@ function CreateContainer() {
                             type="text"
                             required
                             placeholder="Calories"
+                            value={calories}
                             className="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
-                            onChange={(e) => (e.target.value)}
+                            onChange={(e) => setCalories(e.target.value)}
                         />
                     </div>
                     <div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
@@ -209,8 +223,9 @@ function CreateContainer() {
                             type="text"
                             required
                             placeholder="Price"
+                            value={price}
                             className="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
-                            onChange={(e) => (e.target.value)}
+                            onChange={(e) => setPrice(e.target.value)}
                         />
                     </div>
                 </div>

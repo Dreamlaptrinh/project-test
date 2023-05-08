@@ -5,4 +5,5 @@ import {fetchUser} from "../utils/fetchLocalStorageData"
 const useInfo = fetchUser()  //Khởi tạo trạng thái user ban đầu
 export const initialState = {
     user: useInfo,
+    fooditems: null,
 };
