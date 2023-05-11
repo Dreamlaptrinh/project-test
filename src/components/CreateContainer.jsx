@@ -36,7 +36,6 @@ function CreateContainer() {
                 //upfile len filebase quan sat qua trinh tai file len theo %
             },
             (error) => {   //qua trinh tai len loi
-                console.log(error);
                 setFields(true);
                 setMsg("Error when upload");
                 setAlerStatus("danger");

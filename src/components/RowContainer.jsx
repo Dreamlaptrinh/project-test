@@ -1,14 +1,34 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {MdAddShoppingCart} from "react-icons/md"
 import { motion } from "framer-motion";
 import NotFound from "../components/img/NotFound.svg"
+import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
 
 function RowContainer({flag, data,scrollValue}){
     const rowContainer = useRef()
-    console.log(data)
+
+    const[items, setItems]=useState([])
+
+    const [{cartItems}, dispatch] = useStateValue()
+    
+    const addtoCart = (item) => {
+        dispatch({
+            type: actionType.SET_CART_ITEMS,
+            cartItems: items,
+        })
+        localStorage.setItem("cartItems", JSON.stringify(items));
+    }
+
+
     useEffect(()=>{
         rowContainer.current.scrollLeft += scrollValue;
-    },[scrollValue])
+    },[scrollValue]);
+    
+    useEffect(()=>{
+        addtoCart()
+    },[items])
+
     return(
         <div 
         ref={rowContainer}
@@ -27,7 +47,12 @@ function RowContainer({flag, data,scrollValue}){
                     src={item?.imageURL} alt="" 
                     className="w-full h-full object-contain" />
                     </motion.div>
-                    <motion.div whileTap={{scale:0.75}} className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8">
+                    <motion.div 
+                    whileTap={{scale:0.75}} 
+                    className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
+                    onClick={()=>setItems([...cartItems,item])} //khi click vao se them vao gio hang
+                    
+                    >
                     <MdAddShoppingCart className="text-white"/>
                 </motion.div>
                 </div>
