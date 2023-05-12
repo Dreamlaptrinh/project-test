@@ -11,6 +11,8 @@ function CartItem ({item, setFlag, flag, showCart}){
     const [qty, setQty] = useState(item.qty)
     const [items, setItems] = useState([])
 
+
+
     const cartDispatch = ()=>{
         localStorage.setItem("cartItems", JSON.stringify(items));
         dispatch({
@@ -18,23 +20,26 @@ function CartItem ({item, setFlag, flag, showCart}){
             cartItems: items,
         })
     }
+    console.log(cartItems)
     
     
     
 
-    const removeCart = (id) => {
+    const removeCart = () => {
         cartItems.map((cartItem)=>{
             if (cartItem.id == item.id) {
                 const remove = cartItems.filter((item1)=>item1.id !== item.id);
-                cartDispatch(remove);
-                console.log(item.id)
-                console.log(id)
+                const items = remove
+                setFlag(flag+1)
+                localStorage.setItem("cartItems", JSON.stringify(items));
+                dispatch({
+                    type:actionType.SET_CART_ITEMS,
+                    cartItems:items
+                })
 
-                
             }})
+
         }
-
-
     const updateQty = (action,id)=>{
         if(action === "add"){
             setQty(qty+1)
@@ -43,11 +48,11 @@ function CartItem ({item, setFlag, flag, showCart}){
                         item.qty +=1;
                         setFlag(flag+1);
                     }
-                    console.log(id)
+                    console.log(cartItems)
                 })
             cartDispatch();
         }else{
-            if(qty <=0 ){
+            if(qty <=1 ){
                 removeCart()
             }
                 else {

@@ -12,6 +12,7 @@ function RowContainer({flag, data,scrollValue}){
 
     const [{cartItems}, dispatch] = useStateValue()
     
+    
     const addtoCart = (item) => {
         dispatch({
             type: actionType.SET_CART_ITEMS,
