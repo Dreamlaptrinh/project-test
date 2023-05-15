@@ -28,12 +28,16 @@ function CartContainer(){
         console.log(tot)
     },[tot, flag])
 
+
+    useEffect(()=>setTot(cartItems.reduce((sum,cur)=>{
+        return sum + cur.qty * cur.price;
+    },0)),[cartItems]);
+
     const clearCart = ()=> {
         dispatch({
             type: actionType.SET_CART_ITEMS,
             cartItems: [],
         })
-
     }
 
 

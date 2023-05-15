@@ -13,12 +13,25 @@ function RowContainer({flag, data,scrollValue}){
     const [{cartItems}, dispatch] = useStateValue()
     
     
-    const addtoCart = (item) => {
+    const addtoCart = (products) => {
         dispatch({
             type: actionType.SET_CART_ITEMS,
-            cartItems: items,
+            cartItems: products,
         })
         localStorage.setItem("cartItems", JSON.stringify(items));
+    }
+    const addItemtoCart = (pro) => {
+        const list = [...cartItems]
+        const r = list.findIndex(i => i.id == pro.id)
+        if(r < 0){
+            list.push(pro)
+            setItems(list)
+            addtoCart(list)
+        }else{
+            list[r].qty = ++list[r].qty
+            setItems(list)
+            addtoCart(list)
+        }
     }
 
 
@@ -27,7 +40,7 @@ function RowContainer({flag, data,scrollValue}){
     },[scrollValue]);
     
     useEffect(()=>{
-        addtoCart()
+        addtoCart(items)
     },[items])
 
     return(
@@ -51,7 +64,7 @@ function RowContainer({flag, data,scrollValue}){
                     <motion.div 
                     whileTap={{scale:0.75}} 
                     className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
-                    onClick={()=>setItems([...cartItems,item])} //khi click vao se them vao gio hang
+                    onClick={()=>addItemtoCart(item)} //khi click vao se them vao gio hang
                     
                     >
                     <MdAddShoppingCart className="text-white"/>

@@ -11,8 +11,6 @@ function CartItem ({item, setFlag, flag, showCart}){
     const [qty, setQty] = useState(item.qty)
     const [items, setItems] = useState([])
 
-
-
     const cartDispatch = ()=>{
         localStorage.setItem("cartItems", JSON.stringify(items));
         dispatch({
@@ -21,9 +19,7 @@ function CartItem ({item, setFlag, flag, showCart}){
         })
     }
     console.log(cartItems)
-    
-    
-    
+
 
     const removeCart = () => {
         cartItems.map((cartItem)=>{
