@@ -20,18 +20,16 @@ function CartContainer(){
             cartShow: !cartShow
         });
     }
+    console.log(cartItems)
     useEffect(()=>{
-        let totalPrice = cartItems.reduce(function(accumulator, item){
-            return accumulator + item.qty * item.price;
+        let totalPrice = cartItems.reduce(function(sum, item){
+            console.log(item)
+            return sum + item.qty * item.price ;
         },0)
         setTot(totalPrice);
-        console.log(tot)
-    },[tot, flag])
+    },[tot, flag, cartItems])
+    console.log(tot)
 
-
-    useEffect(()=>setTot(cartItems.reduce((sum,cur)=>{
-        return sum + cur.qty * cur.price;
-    },0)),[cartItems]);
 
     const clearCart = ()=> {
         dispatch({

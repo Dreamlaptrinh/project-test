@@ -18,7 +18,6 @@ function CartItem ({item, setFlag, flag, showCart}){
             cartItems: items,
         })
     }
-    console.log(cartItems)
 
 
     const removeCart = () => {
@@ -44,7 +43,6 @@ function CartItem ({item, setFlag, flag, showCart}){
                         item.qty +=1;
                         setFlag(flag+1);
                     }
-                    console.log(cartItems)
                 })
             cartDispatch();
         }else{

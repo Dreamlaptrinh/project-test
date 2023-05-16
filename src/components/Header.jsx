@@ -1,6 +1,6 @@
 //Header trang web
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Logo from "./img/logo.png";
 import Chef1 from "./img/chef1.png";
 
@@ -18,9 +18,12 @@ function Header (){
 
     const firebaseAuth = getAuth(app);
     const provider = new GoogleAuthProvider();
+    const [sum, setSum] = useState(0)
+    const [flag, setFlag] = useState(1);
 
     const [{user,cartShow, cartItems}, dispatch] = useStateValue()
     const [isMenu,setIsMenu] = useState(false)
+
 
     const login = async() =>{  //Đăng nhập login
 
@@ -35,6 +38,16 @@ function Header (){
             setIsMenu(!isMenu)
         )
     };
+
+    useEffect(()=>{
+        let sumQty = cartItems.reduce(function(sum, item){
+            console.log(item)
+            return sum + item.qty;
+        },0)
+        setSum(sumQty);
+    },[sum, flag, cartItems])
+    console.log(sum)
+    
 
     const logout = ()=>{  //Log out user
         setIsMenu(false)
@@ -84,9 +97,9 @@ function Header (){
 
                 <div className="relative flex items-center justify-center" onClick={showCart}> 
                     <MdShoppingBasket className="text-textColor text-2x1 cursor-pointer"/>
-                    {cartItems && cartItems.length > 0 && (
+                    {cartItems && sum > 0 && (
                             <div className="absolute -top-2 -right-5  w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-                            <p className="text-xs text-white font-semibold">{cartItems.length}</p>
+                            <p className="text-xs text-white font-semibold">{sum}</p>
                         </div>
                     )}
                 </div>
